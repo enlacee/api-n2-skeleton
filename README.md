@@ -1,7 +1,25 @@
-# API (Laminas)
-# ===
+# API-N2-SKELETON [Laminas](https://api-tools.getlaminas.org/)
 
-* [Laminas API](https://api-tools.getlaminas.org/)
+Copyright (C) 2020 Nodos \<http://nodos.pe\>
+
+
+Authors:
+--------
+- Anibal
+
+
+Requirements
+------------
+1. PHP >= 7.1
+2. MySQL >= 5.6 or compatible.
+3. Extra PHP extensions: `mcrypt`
+
+
+Write permissions
+-----------------
+The application requires write permissions on the following directories:
+
+- `data`
 
 
 ## 01 AUTH *HTTP Basic*
