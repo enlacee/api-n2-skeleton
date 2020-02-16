@@ -28,4 +28,5 @@ return [
     'StatusLib',
     'Application',
     'Status',
+    'Loja',
 ];
