@@ -6,7 +6,6 @@ return [
     'db' => [
         'adapters' => [
             'dummy' => [],
-            'mysqlconnect' => [],
             'DB\\Cliente' => [],
         ],
     ],
