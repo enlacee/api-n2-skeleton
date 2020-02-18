@@ -3,6 +3,7 @@ return [
     'service_manager' => [
         'factories' => [
             \Loja\V1\Rest\Client\ClientResource::class => \Loja\V1\Rest\Client\ClientResourceFactory::class,
+            \Loja\V1\Rest\Album\AlbumResource::class => \Loja\V1\Rest\Album\AlbumResourceFactory::class,
         ],
     ],
     'router' => [
@@ -25,12 +26,22 @@ return [
                     ],
                 ],
             ],
+            'loja.rest.album' => [
+                'type' => 'Segment',
+                'options' => [
+                    'route' => '/album[/:album_id]',
+                    'defaults' => [
+                        'controller' => 'Loja\\V1\\Rest\\Album\\Controller',
+                    ],
+                ],
+            ],
         ],
     ],
     'api-tools-versioning' => [
         'uri' => [
             0 => 'loja.rest.client',
             1 => 'loja.rest.product',
+            2 => 'loja.rest.album',
         ],
     ],
     'api-tools-rest' => [
@@ -78,11 +89,34 @@ return [
             'collection_class' => \Loja\V1\Rest\Product\ProductCollection::class,
             'service_name' => 'product',
         ],
+        'Loja\\V1\\Rest\\Album\\Controller' => [
+            'listener' => \Loja\V1\Rest\Album\AlbumResource::class,
+            'route_name' => 'loja.rest.album',
+            'route_identifier_name' => 'album_id',
+            'collection_name' => 'album',
+            'entity_http_methods' => [
+                0 => 'GET',
+                1 => 'PATCH',
+                2 => 'PUT',
+                3 => 'DELETE',
+            ],
+            'collection_http_methods' => [
+                0 => 'GET',
+                1 => 'POST',
+            ],
+            'collection_query_whitelist' => [],
+            'page_size' => 25,
+            'page_size_param' => null,
+            'entity_class' => \Loja\V1\Rest\Album\AlbumEntity::class,
+            'collection_class' => \Loja\V1\Rest\Album\AlbumCollection::class,
+            'service_name' => 'Album',
+        ],
     ],
     'api-tools-content-negotiation' => [
         'controllers' => [
             'Loja\\V1\\Rest\\Client\\Controller' => 'HalJson',
             'Loja\\V1\\Rest\\Product\\Controller' => 'HalJson',
+            'Loja\\V1\\Rest\\Album\\Controller' => 'HalJson',
         ],
         'accept_whitelist' => [
             'Loja\\V1\\Rest\\Client\\Controller' => [
@@ -95,6 +129,11 @@ return [
                 1 => 'application/hal+json',
                 2 => 'application/json',
             ],
+            'Loja\\V1\\Rest\\Album\\Controller' => [
+                0 => 'application/vnd.loja.v1+json',
+                1 => 'application/hal+json',
+                2 => 'application/json',
+            ],
         ],
         'content_type_whitelist' => [
             'Loja\\V1\\Rest\\Client\\Controller' => [
@@ -102,6 +141,10 @@ return [
                 1 => 'application/json',
             ],
             'Loja\\V1\\Rest\\Product\\Controller' => [
+                0 => 'application/vnd.loja.v1+json',
+                1 => 'application/json',
+            ],
+            'Loja\\V1\\Rest\\Album\\Controller' => [
                 0 => 'application/vnd.loja.v1+json',
                 1 => 'application/json',
             ],
@@ -131,6 +174,18 @@ return [
                 'entity_identifier_name' => 'id',
                 'route_name' => 'loja.rest.product',
                 'route_identifier_name' => 'product_id',
+                'is_collection' => true,
+            ],
+            \Loja\V1\Rest\Album\AlbumEntity::class => [
+                'entity_identifier_name' => 'id',
+                'route_name' => 'loja.rest.album',
+                'route_identifier_name' => 'album_id',
+                'hydrator' => \Laminas\Hydrator\ArraySerializable::class,
+            ],
+            \Loja\V1\Rest\Album\AlbumCollection::class => [
+                'entity_identifier_name' => 'id',
+                'route_name' => 'loja.rest.album',
+                'route_identifier_name' => 'album_id',
                 'is_collection' => true,
             ],
         ],
